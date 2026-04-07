@@ -1,0 +1,7 @@
+node_modules/
+.env
+cert/*.key
+cert/*.crt
+cert/*.pem
+cert/*.pfx
+cert/*.cer

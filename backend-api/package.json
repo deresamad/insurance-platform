@@ -1,0 +1,33 @@
+{
+  "name": "backend-api",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "seed:roles": "node src/seed/roles.seed.js",
+    "seed:users": "node src/seed/users.seed.js",
+    "seed": "node src/seed/roles.seed.js && node src/seed/users.seed.js",
+    "seed:policies": "node src/seed/policies.seed.js",
+    "gen-cert": "mkdir -p cert && openssl req -x509 -newkey rsa:2048 -keyout cert/server.key -out cert/server.crt -days 825 -nodes -subj \"/CN=localhost/O=NorthStar Dev/C=CA\"",
+    "test:api": "node test/smoke.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
+    "jose": "^5.9.6",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.1.4",
+    "nodemon": "^3.1.10"
+  }
+}

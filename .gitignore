@@ -1,0 +1,23 @@
+# Secrets — never commit (lab requirement)
+backend-api/.env
+frontend-web/.env.local
+.env
+.env.local
+
+# Templates are committed; do not add real secrets to these files
+# (tracked): backend-api/.env.example, frontend-web/.env.local.example
+
+# Dependencies & build output
+node_modules/
+.next/
+dist/
+build/
+*.log
+npm-debug.log*
+.DS_Store
+
+# TLS private keys / certs (dev)
+backend-api/cert/*.key
+backend-api/cert/*.crt
+backend-api/cert/*.pem
+backend-api/cert/*.pfx
