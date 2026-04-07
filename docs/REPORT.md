@@ -122,11 +122,3 @@ The platform demonstrates **HTTPS-backed APIs**, **JWT authentication**, **RBAC*
 
 ---
 
-### Exporting this report to PDF or Word
-
-- **Editor:** Open this file in your editor and print or export as PDF if supported.  
-- **Pandoc (if installed):** `pandoc docs/REPORT.md -o docs/REPORT.pdf`  
-- **Microsoft Word:** Open Word → insert this file as text or use a Markdown converter, then add screenshot images from `docs/screenshots/`.  
-- **Google Docs:** Paste sections and upload images manually.
-
-Do **not** put real **passwords**, **MongoDB URIs**, or **JWT secrets** in the report or in any committed file.
