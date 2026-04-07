@@ -98,16 +98,7 @@ Password for all seeded accounts: **`Password123!`**
 
 The backend can integrate Keycloak SSO (`/api/auth/keycloak/*`). Configure the `KEYCLOAK_*` variables in `.env` if you use it; local JWT login works without Keycloak.
 
-## Screenshots (submission)
-
-Example evidence images for your report/instructor are in **`docs/screenshots/`** (login, dashboard, policies). See **`docs/screenshots/README.md`** for a short index. Add more PNGs there if the rubric asks for HTTPS, RBAC, Postman, etc.
-
-## Submission checklist
-
-Before you turn in the **GitHub link**, **report PDF/DOCX**, and **screenshots**, follow **`docs/SUBMISSION.md`**. To **push to GitHub**, use **`docs/GITHUB.md`**.
-
-- **Report source:** `docs/REPORT.md` — export to PDF/DOCX for submission (see section 10 for screenshots).
 
 ## Report and evidence
 
-For your submission, capture **screenshots** of the app over HTTPS, login/JWT flow, role-restricted screens, and representative API tests (Postman/curl) as required by the lab brief. The `docs/screenshots/` folder is the intended place to keep PNGs that go with the repo.
+capture **screenshots** of the app over HTTPS, login/JWT flow, role-restricted screens, and representative API tests are in  (Postman/curl) `docs/screenshots/` folder 
