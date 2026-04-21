@@ -1,0 +1,249 @@
+{
+  "realm": "insurance-platform",
+  "enabled": true,
+  "displayName": "Insurance Platform",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+
+  "roles": {
+    "realm": [
+      { "name": "ADMIN" },
+      { "name": "AGENT" },
+      { "name": "UNDERWRITER" },
+      { "name": "CLAIMS_ADJUSTER" },
+      { "name": "CUSTOMER" }
+    ]
+  },
+
+  "clientScopes": [
+    {
+      "name": "backend-audience-scope",
+      "description": "Adds backend-api as audience to tokens",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "audience-backend-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "backend-api",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+
+  "clients": [
+    {
+      "clientId": "backend-api",
+      "name": "backend-api",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "fullScopeAllowed": true,
+      "redirectUris": [
+        "http://localhost/api/auth/keycloak/callback"
+      ],
+      "webOrigins": [
+        "http://localhost"
+      ],
+      "defaultClientScopes": [
+        "profile",
+        "email",
+        "roles",
+        "backend-audience-scope"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ],
+      "attributes": {
+        "access.token.lifespan": "3600",
+        "post.logout.redirect.uris": "http://localhost/login"
+      },
+      "secret": "9f3c7d1a8e4b2c6f5a0d7e9b1c4f8a2d6e3c1b7f9a5d2e8c4b6f0a1d3e7b9c2",
+      "protocolMappers": [
+        {
+          "name": "preferred username",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "email",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "email",
+            "claim.name": "email",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "given name",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "firstName",
+            "claim.name": "given_name",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "family name",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "lastName",
+            "claim.name": "family_name",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "full name",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-full-name-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "name": "realm roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "realm_access.roles",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin@insurance.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["ADMIN"]
+    },
+    {
+      "username": "agent1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Agent",
+      "lastName": "One",
+      "email": "agent1@insurance.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["AGENT"]
+    },
+    {
+      "username": "underwriter1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Underwriter",
+      "lastName": "One",
+      "email": "underwriter1@insurance.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["UNDERWRITER"]
+    },
+    {
+      "username": "adjuster1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Adjuster",
+      "lastName": "One",
+      "email": "adjuster1@insurance.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["CLAIMS_ADJUSTER"]
+    },
+    {
+      "username": "customer1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Customer",
+      "lastName": "One",
+      "email": "customer1@insurance.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["CUSTOMER"]
+    }
+  ]
+}

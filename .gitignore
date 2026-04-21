@@ -1,0 +1,29 @@
+# Dependencies
+**/node_modules/
+
+# Builds
+**/.next/
+**/out/
+**/dist/
+
+# Environment
+.env
+.env.local
+backend-api/.env
+frontend-web/.env.local
+!backend-api/.env.example
+!frontend-web/.env.local.example
+
+# TLS material (keep examples only)
+backend-api/cert/*.key
+backend-api/cert/*.pfx
+
+# Logs & caches
+*.log
+npm-debug.log*
+**/.tsbuildinfo
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
