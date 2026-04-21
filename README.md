@@ -1,134 +1,78 @@
 # NorthStar Insurance Platform
 
-Secure full-stack prototype for **Modern Web Technologies** coursework: **Node.js / Express**, **JWT authentication**, **RBAC**, and **Next.js** portals for customers, internal staff, and administrators.
+Express + MongoDB backend, Next.js frontend, JWT auth and role checks. Built for a Modern Web Technologies course lab.
 
-**Repository:** [github.com/deresamad/insurance-platform](https://github.com/deresamad/insurance-platform)
+## Author
 
-## Team members
+[@deresamad](https://github.com/deresamad)
 
-| Contributor | Notes |
-|-------------|--------|
-| **[@deresamad](https://github.com/deresamad)** | Sole author — profile administration & RBAC assignment |
+## Layout
 
-## Repository layout
+| Folder | Contents |
+|--------|----------|
+| `backend-api/` | REST API (`/api`), seeds, tests |
+| `frontend-web/` | Next.js UI |
+| `infrastructure/` | Keycloak import, optional services |
+| `docs/` | Report and screenshot evidence |
 
-| Path | Description |
-|------|-------------|
-| `backend-api/` | Express REST API under `/api`, MongoDB, JWT, TLS |
-| `frontend-web/` | Next.js App Router UI (customer, internal, admin) |
-| `infrastructure/` | Keycloak realm import (optional SSO) |
-| `docs/` | Extra documentation / evidence (e.g. screenshots) |
+## Run
 
-## Implemented features (User profile & admin RBAC)
-
-- **Own profile:** `GET /api/profile/me` — `/profile`
-- **Edit own profile:** `PUT /api/profile/me` — `/profile/edit` (validated form; roles & status not editable here)
-- **Self-service suspension:** `POST /api/profile/me/suspend` — `/profile` (non-admin roles only; logout; suspended users cannot authenticate)
-- **Admin user list:** `GET /api/admin/users` — `/admin/users`
-- **Admin create user:** `POST /api/admin/users` — `/admin/users/create`
-- **Admin load / update user:** `GET` / `PUT /api/admin/users/:userId` — `/admin/users/[id]/edit`
-- **Admin status:** `PUT /api/admin/users/:userId/status` — `/admin/account-status`
-- **RBAC:** `GET /api/admin/rbac/roles`, `PUT /api/admin/rbac/users/:userId/roles` — `/admin/rbac`
-- **Enforcement:** `RoleGuard` / `ProtectedRoute` on admin routes; API uses `authenticate` + `authorizeRoles("ADMIN")` where required
-- **Safety:** at least one active **ADMIN** must remain (last active admin cannot be suspended or stripped of admin)
-
-Authentication flows (local JWT and optional Keycloak) are unchanged at the route level; authorization is layered as above.
-
-## Prerequisites
-
-- Node.js 20+
-- MongoDB (local or Atlas)
-- OpenSSL (if you generate dev TLS certs for the API)
-
-## Quick start
-
-### 1. TLS certificates (development)
-
-The API may be served with **Node `https`**. From `backend-api/`:
-
-```bash
-cd backend-api
-npm run gen-cert
-chmod 600 cert/server.key   # recommended on Unix
-```
-
-See `backend-api/.env.example` for `HTTPS_*` or PKCS#12 options.
-
-### 2. Backend
+**Backend**
 
 ```bash
 cd backend-api
 cp .env.example .env
-# Set MONGODB_URI, JWT_SECRET, FRONTEND_URL, HTTPS_* as needed
-
 npm install
 npm run seed
 npm run dev
 ```
 
-Default API base (from `.env`): often `https://localhost:5001/api`.
+TLS: from `backend-api`, `npm run gen-cert` if you use HTTPS (see `.env.example`).
 
-### 3. Frontend
+**Frontend**
 
 ```bash
 cd frontend-web
 cp .env.local.example .env.local
-# Set NEXT_PUBLIC_API_BASE_URL to your API (see .env.local.example for dev proxy notes)
-
 npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+App: `http://localhost:3000`. Point `NEXT_PUBLIC_API_BASE_URL` at your API (see `.env.local.example` for dev proxy notes).
 
-## JWT & session behavior
+## Profile and admin
 
-- **Login** (`POST /api/auth/login`) returns a signed JWT and a sanitized user (no password hash).
-- Protected routes: `Authorization: Bearer <token>` and/or cookie-based session (see app config).
-- **Non-ACTIVE** accounts cannot use the API; local login is rejected for suspended/inactive users.
+Users: view/edit own profile, self-suspend (not admin). Admins: user list, create/update users, status changes, role assignment via `/admin/rbac`. Non-admins cannot hit admin APIs; UI uses the same role checks.
 
-## Sample users (after `npm run seed`)
+At least one active admin account must stay on the system (enforced in the API).
 
-Password for seeded demo accounts: **`Password123!`**
+## Seed logins
 
-| Username | Role(s) |
-|----------|---------|
-| admin1 | ADMIN |
-| customer1 | CUSTOMER |
-| agent1 | AGENT |
-| underwriter1 | UNDERWRITER |
-| adjuster1 | CLAIMS_ADJUSTER |
+After `npm run seed`, password for seeded users is `Password123!` (e.g. `admin1`, `customer1`, `agent1`, `underwriter1`, `adjuster1`).
 
-## Optional Keycloak
+## Keycloak
 
-Backend routes under `/api/auth/keycloak/*`. Configure `KEYCLOAK_*` in `backend-api/.env` if used; local JWT works without Keycloak.
+Optional SSO under `/api/auth/keycloak/*`. Configure `KEYCLOAK_*` in `backend-api/.env` if you use it.
 
-## API reference (profile & admin subset)
+## API (profile / admin)
 
-Base path: `/api` (e.g. `https://localhost:5001/api`).
+Base URL: `/api` on your server host.
 
-| Method | Path | Auth | Description |
-|--------|------|------|-------------|
-| GET | `/profile/me` | User | Own profile |
-| PUT | `/profile/me` | User | Update allowed profile fields |
-| POST | `/profile/me/suspend` | User (non-admin) | Self-suspend account |
-| GET | `/admin/users` | Admin | List users |
-| POST | `/admin/users` | Admin | Create user |
-| GET | `/admin/users/:userId` | Admin | Get one user |
-| PUT | `/admin/users/:userId` | Admin | Update profile fields & status |
-| PUT | `/admin/users/:userId/status` | Admin | Set `ACTIVE` / `INACTIVE` / `SUSPENDED` |
-| GET | `/admin/rbac/roles` | Admin | List roles |
-| PUT | `/admin/rbac/users/:userId/roles` | Admin | Body: `{ "roles": ["ADMIN", ...] }` role **names** |
+| Method | Path |
+|--------|------|
+| GET | `/profile/me` |
+| PUT | `/profile/me` |
+| POST | `/profile/me/suspend` |
+| GET | `/admin/users` |
+| POST | `/admin/users` |
+| GET | `/admin/users/:userId` |
+| PUT | `/admin/users/:userId` |
+| PUT | `/admin/users/:userId/status` |
+| GET | `/admin/rbac/roles` |
+| PUT | `/admin/rbac/users/:userId/roles` |
 
-## Screenshots (coursework)
+Admin routes need an `ADMIN` role. Role body uses role names, e.g. `{ "roles": ["CUSTOMER"] }`.
 
-Capture UI and place under `docs/screenshots/` (profile, edit profile, admin users, create/edit user, RBAC, account status, unauthorized, admin vs non-admin navigation).
+## Evidence
 
-## Scripts (root)
-
-- `start-platform.sh` / `start-platform.bat` — convenience starters if present in your tree
-- `seed.bat` — Windows seed helper if present
-
----
-
-© Coursework — NorthStar Insurance Platform.
+Screenshots and a written report: `docs/screenshots/`, `docs/REPORT.md`.

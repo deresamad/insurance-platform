@@ -1,6 +1,6 @@
 # Backend API
 
-Secure insurance platform backend API.
+Express + MongoDB API for the NorthStar project.
 
 ## Stack
 

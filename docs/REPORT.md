@@ -1,8 +1,8 @@
-# Lab Report: Secure Insurance Platform
+# Lab report: insurance platform
 
-**Course:** Modern Web Technologies  
-**Project:** NorthStar Insurance & Financial Services — secure full-stack insurance prototype  
-**Stack:** Node.js, Express (HTTPS), MongoDB, JWT, Next.js (React)
+Course: Modern Web Technologies  
+Project: NorthStar (insurance demo)  
+Stack: Node.js, Express (HTTPS), MongoDB, JWT, Next.js
 
 ---
 
@@ -14,7 +14,7 @@ Design and implement a **two-sided insurance platform** (customers and internal 
 - **JWT** authentication and protected REST APIs.
 - **Role-based access control (RBAC)** with **admin-only** role assignment.
 - **Ownership rules** so customers access only their own policies, claims, amendments, and reductions.
-- **Comprehensive user profiles** and workflows for policies, amendments, reductions, and claims.
+- User profiles and workflows for policies, amendments, reductions, and claims.
 
 ---
 
@@ -40,7 +40,7 @@ Design and implement a **two-sided insurance platform** (customers and internal 
 5. Client stores the token (e.g. `localStorage`) and sends `Authorization: Bearer <token>` on protected calls.
 6. **`authenticate`** middleware verifies the JWT, loads the user from the database (so **role changes** apply on the next request), and rejects **inactive** accounts.
 
-Passwords are **never** stored in the token or returned in API responses.
+Password hashes are not put in the JWT or returned on login responses.
 
 ---
 
@@ -53,7 +53,7 @@ Passwords are **never** stored in the token or returned in API responses.
 
 ---
 
-## 5. Comprehensive user profile design
+## 5. User profile model
 
 Each user has:
 
@@ -104,13 +104,9 @@ Each user has:
 
 ---
 
-## 10. Screenshots (working features)
+## 10. Screenshots
 
-Screenshots are stored in the repository under **`docs/screenshots/`**:
-
-1. **Login** — `01-login-demo-accounts.png`  
-2. **Dashboard (internal/admin workspace)** — `02-dashboard-admin-workspace.png`  
-3. **Policies list** — `03-policies-list-car-policy.png`  
+Files in `docs/screenshots/`: `01-login-demo-accounts.png`, `02-dashboard-admin-workspace.png`, `03-policies-list-car-policy.png`.
 
 
 
@@ -118,7 +114,7 @@ Screenshots are stored in the repository under **`docs/screenshots/`**:
 
 ## 11. Conclusion
 
-The platform demonstrates **HTTPS-backed APIs**, **JWT authentication**, **RBAC**, **admin-controlled roles**, **ownership enforcement** for customer data, and **insurance workflows** aligned with the lab specification, with clear separation between customer-facing and internal operational features.
+The app runs the API over HTTPS in dev, uses JWT for auth, restricts routes by role, keeps customer data scoped to the owning user, and implements the policy / amendment / reduction / claim flows from the lab brief.
 
 ---
 

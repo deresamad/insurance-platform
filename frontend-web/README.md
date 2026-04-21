@@ -1,32 +1,15 @@
-\# Frontend Web
+# Frontend (Next.js)
 
+Next.js App Router UI for the NorthStar project.
 
+## Stack
 
-Secure insurance platform frontend.
+- Next.js
+- React
+- TypeScript
 
+## Setup
 
-
-\## Stack
-
-
-
-\- Next.js App Router
-
-\- React
-
-\- TypeScript
-
-
-
-\## Setup
-
-
-
-1\. Configure `.env.local`
-
-2\. Install dependencies:
-
-&#x20;  ```bash
-
-&#x20;  npm install
-
+1. Copy `.env.local.example` to `.env.local` and set variables.
+2. `npm install`
+3. `npm run dev`
